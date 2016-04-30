@@ -1,0 +1,30 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.all;	
+	
+	
+entity ChangeMachine is
+	port(change 	 :	in std_logic_vector(4 downto 0);
+		  RunOut		 : out std_logic);
+end ChangeMachine;
+
+architecture Behavioral of ChangeMachine is
+signal plafon_10 : unsigned(4 downto 0) := "01010";
+signal s_change : unsigned(4 downto 0);
+begin
+	
+	plafon_10 : process(change)
+	begin
+	s_change <= unsigned(change);
+	if (s_change = "11111") then
+			plafon_10 <= plafon_10;
+			RunOut <= '0';
+		elsif ((plafon_10 > s_change)) then
+			plafon_10 <= plafon_10 - s_change;
+			RunOut <= '0';
+		else
+			RunOut <= '1';
+		end if;
+		
+	end process;
+end Behavioral;
